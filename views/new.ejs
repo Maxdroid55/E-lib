@@ -28,6 +28,14 @@
         <label for="imgUrl">Book cover url: </label> <br />
         <input type="text" name="imgUrl" id="imgUrl" />
       </section>
+      <section>
+        <label for="category">Select a category:</label> <br />
+        <select name="category" id="category">
+          <% for(let c of categories) {%>
+          <option value="<%= c %>"><%= c %></option>
+          <% } %>
+        </select>
+      </section>
       <br />
       <button>Add</button> &nbsp; <a href="/books">Cancel</a>
     </form>

@@ -6,7 +6,18 @@
     <title>Books</title>
   </head>
   <body>
-    <h1>All books</h1>
+    <h1><%= c %> books</h1>
+    <form action="/books" method="get">
+      <section>
+        <label for="category">filter by: </label>
+        <select name="category" id="category">
+          <% for(let c of categories) {%>
+          <option value="<%= c %>"><%= c %></option>
+          <% } %>
+        </select>
+        <button>Filter</button>
+      </section>
+    </form>
     <ul>
       <% for(let book of books) { %>
       <li><%= book.title %> &nbsp;<a href="/books/<%= book._id %>">View</a></li>

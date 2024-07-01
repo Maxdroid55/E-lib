@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const categories = require("../categories");
 
 const bookSchema = new mongoose.Schema({
   title: {
@@ -21,6 +22,11 @@ const bookSchema = new mongoose.Schema({
   imgUrl: {
     type: String,
     default: "",
+  },
+  category: {
+    type: String,
+    default: "none",
+    enum: categories,
   },
 });
 

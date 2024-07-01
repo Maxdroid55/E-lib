@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const Book = require("./Models/Book");
 const methodOverride = require("method-override");
 const path = require("path");
+const categories = require("./categories");
+const capitalizeFirstLetter = require("./utils");
 const app = express();
 const port = 3000;
 
@@ -26,13 +28,21 @@ app.get("/", (req, res) => {
 });
 
 app.get("/books", async (req, res) => {
-  const books = await Book.find();
-  //console.log(books);
-  res.render("books", { books });
+  if ("category" in req.query) {
+    const books = await Book.find({ category: req.query.category });
+    res.render("books", {
+      books,
+      categories,
+      c: capitalizeFirstLetter(req.query.category),
+    });
+  } else {
+    const books = await Book.find();
+    res.render("books", { books, categories, c: "All" });
+  }
 });
 
 app.get("/books/new", (req, res) => {
-  res.render("new");
+  res.render("new", { categories });
 });
 
 app.get("/books/:id", async (req, res) => {
@@ -45,7 +55,7 @@ app.get("/books/:id", async (req, res) => {
 app.get("/books/:id/edit", async (req, res) => {
   const { id } = req.params;
   const foundBook = await Book.findById(id);
-  res.render("edit", { book: foundBook });
+  res.render("edit", { book: foundBook, categories });
 });
 
 app.post("/books", async (req, res) => {
