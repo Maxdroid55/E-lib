@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit</title>
+  </head>
+  <body>
+    <h1>Edit book</h1>
+    <form action="/books/<%= book._id %>?_method=PATCH" method="post">
+      <section>
+        <label for="title">Title: </label> <br />
+        <input type="text" name="title" id="title" value="<%= book.title %>" />
+      </section>
+      <section>
+        <label for="author">Author: </label> <br />
+        <input
+          type="text"
+          name="author"
+          id="author"
+          value="<%= book.author %>"
+        />
+      </section>
+      <section>
+        <label for="numOfPages">Number of pages: </label> <br />
+        <input
+          type="number"
+          name="numOfPages"
+          id="numOfPages"
+          value="<%= book.numOfPages %>"
+        />
+      </section>
+      <section>
+        <label for="synopsis">What is the book about? </label> <br />
+        <textarea name="synopsis" id="synopsis" rows="5" cols="30">
+<%= book.synopsis %></textarea
+        >
+      </section>
+      <section>
+        <label for="imgUrl">Book cover url: </label> <br />
+        <input
+          type="text"
+          name="imgUrl"
+          id="imgUrl"
+          value="<%= book.imgUrl %>"
+        />
+      </section>
+      <br />
+      <button>Save</button> &nbsp; <a href="/books">Cancel</a>
+    </form>
+  </body>
+</html>

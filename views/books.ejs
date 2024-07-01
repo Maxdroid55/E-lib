@@ -7,5 +7,13 @@
   </head>
   <body>
     <h1>All books</h1>
+    <ul>
+      <% for(let book of books) { %>
+      <li><%= book.title %> &nbsp;<a href="/books/<%= book._id %>">View</a></li>
+      <% } %>
+    </ul>
+    <div>
+      <a href="/books/new">+ Add a new book</a>
+    </div>
   </body>
 </html>

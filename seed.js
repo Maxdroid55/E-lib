@@ -1,38 +1,7 @@
 const mongoose = require("mongoose");
+const book = require("./Models/Book");
 
-mongoose
-  .connect("mongodb://127.0.0.1/booksDB")
-  .then(() => console.log("Connected to database"))
-  .catch((e) => {
-    console.log("Failed to connect to database");
-    console.log(e);
-  });
-
-const bookSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  author: {
-    type: String,
-    required: true,
-    default: "Unknown",
-  },
-  numOfPages: {
-    type: Number,
-    default: 0,
-  },
-  synopsis: {
-    type: String,
-    required: true,
-  },
-  imgUrl: {
-    type: String,
-    default: "",
-  },
-});
-
-const Book = mongoose.model("Book", bookSchema);
+const Book = book;
 
 // const newBook = new Book({
 //   title: "The 48 Laws of Power",
@@ -92,4 +61,5 @@ const books = [
   },
 ];
 
-Book.insertMany(books);
+// Book.insertMany(books);
+console.log(Book);
