@@ -1,24 +1,53 @@
 <% layout("layout/boilerplate") -%>
-<div class="row col-6 offset-3 mt-4">
-  <h1><%= c %> books</h1>
-  <form action="/books" method="get">
-    <section>
-      <label for="category">filter by: </label>
-      <select name="category" id="category">
+<div class="row">
+  <div class="col-6 offset-3 mt-4 text-center">
+    <h1><%= cat %> books</h1>
+    <form class="my-4" action="/books" method="get">
+      <select class="form-select text-center" name="category" id="category">
         <option disabled selected>-- Select a category --</option>
         <% for(let c of categories) {%>
         <option value="<%= c %>"><%= c %></option>
         <% } %>
       </select>
-      <button>Filter</button>
-    </section>
-  </form>
-  <ul>
-    <% for(let book of books) { %>
-    <li><%= book.title %> &nbsp;<a href="/books/<%= book._id %>">View</a></li>
-    <% } %>
-  </ul>
-  <div>
-    <a href="/books/new">+ Add a new book</a>
+    </form>
+    <ul>
+      <% for(let book of books) { %> <% } %>
+    </ul>
+    <div class="row">
+      <% for(let book of books) { %>
+      <div class="card mb-3 p-0">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img
+              src="<%= book.imgUrl %>"
+              class="img-fluid rounded-start"
+              alt="..."
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><%= book.title %></h5>
+              <p><small class="card-text"><%= book.synopsis %></small></p>
+              <a class="btn btn-primary px-4" href="/books/<%= book._id %>"
+                >View</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    <div>
+      <a href="/books/new">+ Add a new book</a>
+    </div>
   </div>
 </div>
+<script>
+  const form = document.querySelector("form");
+  const catSelect = document.querySelector("#category");
+
+  catSelect.addEventListener("change", (e) => {
+    // console.log(e.target.value);
+    form.submit();
+  });
+</script>

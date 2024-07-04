@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("home");
 });
 
 // books routes
@@ -36,11 +36,11 @@ app.get("/books", async (req, res) => {
     res.render("books", {
       books,
       categories,
-      c: capitalizeFirstLetter(req.query.category),
+      cat: capitalizeFirstLetter(req.query.category),
     });
   } else {
     const books = await Book.find();
-    res.render("books/index", { books, categories, c: "All" });
+    res.render("books/index", { books, categories, cat: "All" });
   }
 });
 
