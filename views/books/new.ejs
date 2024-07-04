@@ -1,0 +1,34 @@
+<% layout("layout/boilerplate") -%>
+<h1>Add book</h1>
+<form action="/books" method="post">
+  <section>
+    <label for="title">Title: </label> <br />
+    <input type="text" name="title" id="title" />
+  </section>
+  <section>
+    <label for="author">Author: </label> <br />
+    <input type="text" name="author" id="author" />
+  </section>
+  <section>
+    <label for="numOfPages">Number of pages: </label> <br />
+    <input type="number" name="numOfPages" id="numOfPages" />
+  </section>
+  <section>
+    <label for="synopsis">What is the book about? </label> <br />
+    <textarea name="synopsis" id="synopsis" rows="5" cols="30"></textarea>
+  </section>
+  <section>
+    <label for="imgUrl">Book cover url: </label> <br />
+    <input type="text" name="imgUrl" id="imgUrl" />
+  </section>
+  <section>
+    <label for="category">Select a category:</label> <br />
+    <select name="category" id="category">
+      <% for(let c of categories) {%>
+      <option value="<%= c %>"><%= c %></option>
+      <% } %>
+    </select>
+  </section>
+  <br />
+  <button>Add</button> &nbsp; <a href="/books">Cancel</a>
+</form>
