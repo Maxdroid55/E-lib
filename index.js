@@ -6,6 +6,8 @@ const path = require("path");
 const categories = require("./categories");
 const ejsMate = require("ejs-mate");
 const capitalizeFirstLetter = require("./utils");
+const asyncWrapper = require("./utils");
+const AppError = require("./AppError");
 const app = express();
 const port = 3000;
 
@@ -30,53 +32,80 @@ app.get("/", (req, res) => {
 });
 
 // books routes
-app.get("/books", async (req, res) => {
-  if ("category" in req.query) {
-    const books = await Book.find({ category: req.query.category });
-    res.render("books", {
-      books,
-      categories,
-      cat: capitalizeFirstLetter(req.query.category),
-    });
-  } else {
-    const books = await Book.find();
-    res.render("books/index", { books, categories, cat: "All" });
-  }
-});
+app.get(
+  "/books",
+  asyncWrapper(async (req, res) => {
+    if ("category" in req.query) {
+      const books = await Book.find({ category: req.query.category });
+      res.render("books", {
+        books,
+        categories,
+        cat: capitalizeFirstLetter(req.query.category),
+      });
+    } else {
+      const books = await Book.find();
+      res.render("books/index", { books, categories, cat: "All" });
+    }
+  })
+);
 
 app.get("/books/new", (req, res) => {
   res.render("books/new", { categories });
 });
 
-app.get("/books/:id", async (req, res) => {
-  const { id } = req.params;
-  const foundBook = await Book.findById(id);
-  //   console.log(foundBook);
-  res.render("books/details", { book: foundBook });
+app.get(
+  "/books/:id",
+  asyncWrapper(async (req, res, next) => {
+    const { id } = req.params;
+    const foundBook = await Book.findById(id);
+    res.render("books/details", { book: foundBook });
+  })
+);
+
+app.get(
+  "/books/:id/edit",
+  asyncWrapper(async (req, res) => {
+    const { id } = req.params;
+    const foundBook = await Book.findById(id);
+    res.render("books/edit", { book: foundBook, categories });
+  })
+);
+
+app.post(
+  "/books",
+  asyncWrapper(async (req, res) => {
+    const newBook = new Book(req.body);
+    await newBook.save();
+    res.redirect("/books");
+  })
+);
+
+app.patch(
+  "/books/:id",
+  asyncWrapper(async (req, res) => {
+    const { id } = req.params;
+    const foundBook = await Book.findByIdAndUpdate(id, req.body);
+    res.redirect(`/books/${id}`);
+  })
+);
+
+app.delete(
+  "/books/:id",
+  asyncWrapper(async (req, res) => {
+    const { id } = req.params;
+    await Book.findByIdAndDelete(id);
+    res.redirect("/books");
+  })
+);
+
+app.all("*", (req, res, next) => {
+  next(new AppError("page not found", 404));
 });
 
-app.get("/books/:id/edit", async (req, res) => {
-  const { id } = req.params;
-  const foundBook = await Book.findById(id);
-  res.render("books/edit", { book: foundBook, categories });
-});
-
-app.post("/books", async (req, res) => {
-  const newBook = new Book(req.body);
-  await newBook.save();
-  res.redirect("/books");
-});
-
-app.patch("/books/:id", async (req, res) => {
-  const { id } = req.params;
-  const foundBook = await Book.findByIdAndUpdate(id, req.body);
-  res.redirect(`/books/${id}`);
-});
-
-app.delete("/books/:id", async (req, res) => {
-  const { id } = req.params;
-  await Book.findByIdAndDelete(id);
-  res.redirect("/books");
+app.use((err, req, res, next) => {
+  const { status = 500 } = err;
+  if (!err.message) err.message = "Something went wrong.";
+  res.status(status).render("error", { err });
 });
 
 app.listen(port, () => {
