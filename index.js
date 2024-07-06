@@ -75,12 +75,8 @@ app.patch("/books/:id", async (req, res) => {
 
 app.delete("/books/:id", async (req, res) => {
   const { id } = req.params;
-  const foundBook = await Book.findByIdAndDelete(id);
+  await Book.findByIdAndDelete(id);
   res.redirect("/books");
-});
-
-app.get("*", (req, res) => {
-  res.send("404: Not found");
 });
 
 app.listen(port, () => {

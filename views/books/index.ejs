@@ -21,7 +21,7 @@
             <img
               src="<%= book.imgUrl %>"
               class="img-fluid rounded-start"
-              alt="..."
+              alt="<%= book.title %>"
             />
           </div>
           <div class="col-md-8">
@@ -36,9 +36,6 @@
         </div>
       </div>
       <% } %>
-    </div>
-    <div>
-      <a href="/books/new">+ Add a new book</a>
     </div>
   </div>
 </div>

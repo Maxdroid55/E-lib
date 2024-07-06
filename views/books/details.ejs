@@ -1,14 +1,30 @@
 <% layout("layout/boilerplate") -%>
-<h1><%= book.title %></h1>
-<h2>by <%= book.author %></h2>
-<img src="<%= book.imgUrl %>" alt="<%= book.title %>" width="100px" />
-<p><%= book.synopsis %></p>
-<p><b>Number of pages:</b> <%= book.numOfPages %></p>
-<p><b>Category: </b><%= book.category %></p>
-<section>
-  <a href="/books/<%= book._id %>/edit">Edit</a>
-  <form action="/books/<%= book._id %>?_method=DELETE" method="post">
-    <button>Delete</button>
-  </form>
-</section>
-<a href="/books">View all books</a>
+<div class="col-6">
+  <div class="card text-center">
+    <img
+      src="<%= book.imgUrl %>"
+      class="card-img-top offset-3"
+      alt="..."
+      style="width: 18rem"
+    />
+    <div class="card-body">
+      <h5 class="card-title"><%= book.title %></h5>
+      <p class="card-text"><%= book.synopsis %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Author: <%= book.author %></li>
+      <li class="list-group-item">Category: <%= book.category %></li>
+      <li class="list-group-item">Number of pages: <%= book.numOfPages%></li>
+    </ul>
+    <div class="card-body">
+      <a href="/books/<%= book._id %>/edit" class="btn btn-warning">Edit</a>
+      <form
+        class="d-inline ms-4"
+        action="/books/<%= book._id %>?_method=DELETE"
+        method="post"
+      >
+        <button class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>

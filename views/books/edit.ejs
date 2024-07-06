@@ -1,52 +1,55 @@
 <% layout("layout/boilerplate") -%>
-<h1>Edit book</h1>
-<form action="/books/<%= book._id %>?_method=PATCH" method="post">
-  <section>
-    <label for="title">Title: </label> <br />
-    <input type="text" name="title" id="title" value="<%= book.title %>" />
+<div class="col-6 offset-3">
+<h1 class="text-center">Edit book</h1>
+<form class="form-control py-4" action="/books/<%= book._id %>?_method=PATCH" method="post">
+  <section class="mt-2">
+    <label for="title" class="form-label">Title </label> <br />
+    <input type="text" name="title" id="title" value="<%= book.title %>" class="form-control"/>
   </section>
-  <section>
-    <label for="author">Author: </label> <br />
+  <section class="mt-2">
+    <label for="author" class="form-label">Author </label> <br />
     <input
       type="text"
       name="author"
       id="author"
       value="<%= book.author %>"
+      class="form-control"
     />
   </section>
-  <section>
-    <label for="numOfPages">Number of pages: </label> <br />
+  <section class="mt-2">
+    <label for="numOfPages" class="form-label">Number of pages </label> <br />
     <input
       type="number"
       name="numOfPages"
       id="numOfPages"
       value="<%= book.numOfPages %>"
+      class="form-control"
     />
   </section>
-  <section>
-    <label for="synopsis">What is the book about? </label> <br />
-    <textarea name="synopsis" id="synopsis" rows="5" cols="30">
-      <%= book.synopsis %>
-    </textarea
+  <section class="mt-2">
+    <label for="synopsis" class="form-label">What is the book about? </label> <br />
+    <textarea name="synopsis" id="synopsis" rows="5" cols="30" class="form-control"><%= book.synopsis %></textarea
     >
   </section>
-  <section>
-    <label for="imgUrl">Book cover url: </label> <br />
+  <section class="mt-2">
+    <label for="imgUrl" class="form-label">Book cover url </label> <br />
     <input
       type="text"
       name="imgUrl"
       id="imgUrl"
       value="<%= book.imgUrl %>"
+      class="form-control"
     />
   </section>
-  <section>
-    <label for="category">Select a category:</label> <br />
-    <select name="category" id="category">
+  <section class="mt-2">
+    <label for="category" class="form-label">Select a category</label> <br />
+    <select name="category" id="category" class="form-select">
       <% for(let c of categories) {%>
       <option value="<%= c %>" <%= c === book.category ?  "selected" : "" %>><%= c %></option>
       <% } %>
     </select>
   </section>
   <br />
-  <button>Save</button> &nbsp; <a href="/books">Cancel</a>
+  <button class="btn btn-success">Save</button> &nbsp; <a class="btn btn-secondary" href="/books">Cancel</a>
 </form>
+</div>

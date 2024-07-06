@@ -1,34 +1,53 @@
 <% layout("layout/boilerplate") -%>
-<h1>Add book</h1>
-<form action="/books" method="post">
-  <section>
-    <label for="title">Title: </label> <br />
-    <input type="text" name="title" id="title" />
-  </section>
-  <section>
-    <label for="author">Author: </label> <br />
-    <input type="text" name="author" id="author" />
-  </section>
-  <section>
-    <label for="numOfPages">Number of pages: </label> <br />
-    <input type="number" name="numOfPages" id="numOfPages" />
-  </section>
-  <section>
-    <label for="synopsis">What is the book about? </label> <br />
-    <textarea name="synopsis" id="synopsis" rows="5" cols="30"></textarea>
-  </section>
-  <section>
-    <label for="imgUrl">Book cover url: </label> <br />
-    <input type="text" name="imgUrl" id="imgUrl" />
-  </section>
-  <section>
-    <label for="category">Select a category:</label> <br />
-    <select name="category" id="category">
-      <% for(let c of categories) {%>
-      <option value="<%= c %>"><%= c %></option>
-      <% } %>
-    </select>
-  </section>
-  <br />
-  <button>Add</button> &nbsp; <a href="/books">Cancel</a>
-</form>
+<div class="col-6 offset-3">
+  <h1 class="text-center">Add book</h1>
+  <form class="form-control py-4" action="/books" method="post">
+    <section class="mt-2">
+      <label for="title" class="form-label">Title </label> <br />
+      <input type="text" name="title" id="title" class="form-control" />
+    </section>
+    <section class="mt-2">
+      <label for="author" class="form-label">Author </label> <br />
+      <input type="text" name="author" id="author" class="form-control" />
+    </section>
+    <section class="mt-2">
+      <label for="numOfPages" class="form-label">Number of pages: </label>
+      <br />
+      <input
+        type="number"
+        name="numOfPages"
+        id="numOfPages"
+        class="form-control"
+      />
+    </section>
+    <section class="mt-2">
+      <label for="synopsis" class="form-label">What is the book about? </label>
+      <br />
+      <textarea
+        name="synopsis"
+        id="synopsis"
+        rows="5"
+        cols="30"
+        class="form-control"
+      ></textarea>
+    </section>
+    <section class="mt-2">
+      <label for="imgUrl" class="form-label">Book cover url: </label> <br />
+      <input type="text" name="imgUrl" id="imgUrl" class="form-control" />
+    </section>
+    <section class="mt-2">
+      <label for="category" class="form-label">Select a category:</label> <br />
+      <select name="category" id="category" class="form-select">
+        <option disabled selected class="text-center">
+          -- Select a category --
+        </option>
+        <% for(let c of categories) {%>
+        <option value="<%= c %>"><%= c %></option>
+        <% } %>
+      </select>
+    </section>
+    <br />
+    <button class="btn btn-success">Add</button> &nbsp;
+    <a class="btn btn-danger" href="/books">Cancel</a>
+  </form>
+</div>
