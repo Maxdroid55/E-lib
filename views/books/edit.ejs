@@ -1,10 +1,12 @@
 <% layout("layout/boilerplate") -%>
 <div class="col-6 offset-3">
 <h1 class="text-center">Edit book</h1>
-<form class="form-control py-4" action="/books/<%= book._id %>?_method=PATCH" method="post">
+<form class="form-control py-4 needs-validation" action="/books/<%= book._id %>?_method=PATCH" method="post" novalidate>
   <section class="mt-2">
     <label for="title" class="form-label">Title </label> <br />
     <input type="text" name="title" id="title" value="<%= book.title %>" class="form-control"/>
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please enter a title</div>
   </section>
   <section class="mt-2">
     <label for="author" class="form-label">Author </label> <br />
@@ -15,6 +17,8 @@
       value="<%= book.author %>"
       class="form-control"
     />
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please provide the name of the author</div>
   </section>
   <section class="mt-2">
     <label for="numOfPages" class="form-label">Number of pages </label> <br />
@@ -25,11 +29,17 @@
       value="<%= book.numOfPages %>"
       class="form-control"
     />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">
+        Please provide the number of pages the books has
+      </div>
   </section>
   <section class="mt-2">
     <label for="synopsis" class="form-label">What is the book about? </label> <br />
     <textarea name="synopsis" id="synopsis" rows="5" cols="30" class="form-control"><%= book.synopsis %></textarea
     >
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please describe what the book is about</div>
   </section>
   <section class="mt-2">
     <label for="imgUrl" class="form-label">Book cover url </label> <br />
@@ -40,6 +50,10 @@
       value="<%= book.imgUrl %>"
       class="form-control"
     />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">
+        Please enter the url for the book cover image
+      </div>
   </section>
   <section class="mt-2">
     <label for="category" class="form-label">Select a category</label> <br />
@@ -48,8 +62,13 @@
       <option value="<%= c %>" <%= c === book.category ?  "selected" : "" %>><%= c %></option>
       <% } %>
     </select>
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">
+        Please select the category the book belongs to
+      </div>
   </section>
   <br />
   <button class="btn btn-success">Save</button> &nbsp; <a class="btn btn-secondary" href="/books">Cancel</a>
 </form>
 </div>
+
