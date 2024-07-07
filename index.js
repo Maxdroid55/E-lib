@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const capitalizeFirstLetter = require("./utils");
 const asyncWrapper = require("./utils");
 const AppError = require("./AppError");
+const joiBookSchema = require("./schemas");
 const app = express();
 const port = 3000;
 
@@ -26,6 +27,16 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+
+const validateBook = (req, res, next) => {
+  const { error } = joiBookSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new AppError(msg, 400);
+  } else {
+    next();
+  }
+};
 
 app.get("/", (req, res) => {
   res.render("home");
@@ -73,6 +84,7 @@ app.get(
 
 app.post(
   "/books",
+  validateBook,
   asyncWrapper(async (req, res) => {
     const newBook = new Book(req.body);
     await newBook.save();
@@ -82,6 +94,7 @@ app.post(
 
 app.patch(
   "/books/:id",
+  validateBook,
   asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const foundBook = await Book.findByIdAndUpdate(id, req.body);
