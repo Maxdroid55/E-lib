@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const categories = require("../categories");
+const Schema = mongoose.Schema;
 
-const bookSchema = new mongoose.Schema({
+const bookSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -27,6 +28,10 @@ const bookSchema = new mongoose.Schema({
     type: String,
     default: "none",
     enum: categories,
+  },
+  reviews: {
+    type: [Schema.Types.ObjectId],
+    ref: "Review",
   },
 });
 
