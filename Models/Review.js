@@ -7,6 +7,10 @@ const reviewSchema = new Schema({
     required: true,
     default: 1,
   },
+  comment: {
+    type: String,
+    required: true,
+  },
 });
 
 const Review = mongoose.model("Review", reviewSchema);

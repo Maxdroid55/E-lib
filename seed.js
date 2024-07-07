@@ -23,7 +23,6 @@ mongoose
 // });
 
 // newBook.save();
-Book.deleteMany({});
 
 const books = [
   {
@@ -76,7 +75,8 @@ const books = [
   },
 ];
 
-Book.insertMany(books)
+Book.deleteMany({})
+  .then(() => Book.insertMany(books))
   .then(() => {
     console.log("Seed data added");
   })

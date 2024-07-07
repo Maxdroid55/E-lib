@@ -10,4 +10,9 @@ const joiBookSchema = Joi.object({
   category: Joi.string(),
 }).required();
 
-module.exports = joiBookSchema;
+const joiReviewSchema = Joi.object({
+  rating: Joi.number().required().min(1).max(10).default(5),
+  comment: Joi.string().required(),
+});
+
+module.exports = { joiBookSchema, joiReviewSchema };
