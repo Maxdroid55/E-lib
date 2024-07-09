@@ -79,6 +79,12 @@
           <%= r.rating %>/10
         </h6>
         <p class="card-text"><%= r.comment %></p>
+        <form
+          action="/books/<%= book._id %>/reviews/<%= r._id %>?_method=DELETE"
+          method="post"
+        >
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
       </div>
     </div>
     <% } %>
