@@ -5,6 +5,7 @@ const { asyncWrapper } = require("../utils");
 const Book = require("../Models/Book");
 const Review = require("../Models/Review");
 const { joiReviewSchema } = require("../schemas");
+const flash = require("connect-flash");
 
 const validateReview = (req, res, next) => {
   const { review } = req.body;
@@ -31,6 +32,8 @@ router.post(
     book.reviews.push(newReview);
     await book.save();
 
+    req.flash("success", "Successfuly added review.");
+
     res.redirect(`/books/${id}`);
   })
 );
@@ -40,6 +43,7 @@ router.delete(
     const { id, reviewId } = req.params;
     await Book.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success", "Successfuly delete review.");
     res.redirect(`/books/${id}`);
   })
 );
