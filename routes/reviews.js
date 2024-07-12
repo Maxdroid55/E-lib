@@ -6,6 +6,7 @@ const Book = require("../Models/Book");
 const Review = require("../Models/Review");
 const { joiReviewSchema } = require("../schemas");
 const flash = require("connect-flash");
+const { requireLogin } = require("../middleware");
 
 const validateReview = (req, res, next) => {
   const { review } = req.body;
@@ -20,6 +21,7 @@ const validateReview = (req, res, next) => {
 
 router.post(
   "/",
+  requireLogin,
   validateReview,
   asyncWrapper(async (req, res) => {
     const { id } = req.params;
@@ -39,6 +41,7 @@ router.post(
 );
 router.delete(
   "/:reviewId",
+  requireLogin,
   asyncWrapper(async (req, res) => {
     const { id, reviewId } = req.params;
     await Book.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
